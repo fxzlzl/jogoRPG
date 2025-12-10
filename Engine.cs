@@ -19,6 +19,7 @@ namespace jogoRPG
             InitializeComponent();
 
             _player = new Player();
+            local Local = new local(1, "Casa", "Essa é SUA casa! 🏠");
 
             _player.HPatual = 10;
             _player.HPmax = 50;

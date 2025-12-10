@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace jogoRPG
 {
-    internal class monstro
+    public class monstro : criaturaViva
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int HPmax { get; set; }
-        public int HPatual { get; set; }
         public int DanoMax { get; set; }
         public int ExpRecompensa { get; set; }
         public int OuroRecompensa { get; set; }

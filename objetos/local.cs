@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace jogoRPG
 {
-    internal class local
+    public class local
     {
-        public int ID { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
+        public int ID { get; private set; }
+        public string Nome { get; private set; }
+        public string Descricao { get; private set; }
+
+        public local(int id, string nome, string descricao)
+        {
+            ID = id;
+            Nome = nome;
+            Descricao = descricao;
+        }
     }
 }

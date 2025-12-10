@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace jogoRPG
 {
-    public class healingPot : item
+    public class criaturaViva
     {
-        public int qtdCura { get; set; }
+        public int HPmax { get; set; }
+        public int HPatual { get; set; }
     }
 }

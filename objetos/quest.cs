@@ -6,12 +6,22 @@ using System.Threading.Tasks;
 
 namespace jogoRPG
 {
-    internal class quest
+    public class quest
     {
-        public int ID { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public int ExpRecompensas{ get; set; }
-        public int OuroRecompensas { get; set; }
+        public int ID { get; private set; }
+        public string Nome { get; private set; }
+        public string Descricao { get; private set; }
+        public int RecompensaOuro { get; private set; }
+        public int RecompensaXP { get; private set; }
+
+        public quest(int id, string nome, string descricao, int recompensaXP, int recompensaOuro)
+        {
+            ID = id;
+            Nome = nome;
+            Descricao = descricao;
+            RecompensaOuro = recompensaOuro;
+            RecompensaXP = recompensaXP;
+        }
     }
 }
+

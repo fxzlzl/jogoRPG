@@ -53,6 +53,7 @@
     <Compile Include="Engine.Designer.cs">
       <DependentUpon>Engine.cs</DependentUpon>
     </Compile>
+    <Compile Include="objetos\criaturaViva.cs" />
     <Compile Include="objetos\healingPot.cs" />
     <Compile Include="objetos\item.cs" />
     <Compile Include="objetos\local.cs" />
