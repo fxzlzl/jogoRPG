@@ -8,6 +8,12 @@ namespace jogoRPG
 {
     public class healingPot : item
     {
-        public int qtdCura { get; set; }
+        public int QtdCura { get; private set; }
+
+        public healingPot(int id, string nome, string nomePlural, int qtdCura)
+            : base(id, nome, nomePlural)
+        {
+            QtdCura = qtdCura;
+        }
     }
 }

@@ -8,10 +8,20 @@ namespace jogoRPG
 {
     public class monstro : criaturaViva
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int DanoMax { get; set; }
-        public int ExpRecompensa { get; set; }
-        public int OuroRecompensa { get; set; }
+        public int ID { get; private set; }
+        public string Name { get; private set; }
+        public int MaxDMG { get; private set; }
+        public int recEXP { get; private set; }
+        public int recOuro { get; private set; }
+
+        public monstro(int id, string nome, int danoMax, int recXP, int recOro, int hpAtual, int hpMax)
+            : base(hpAtual, hpMax)
+        {
+            ID = id;
+            Name = nome;
+            MaxDMG = danoMax;
+            recEXP = recXP;
+            recOuro = recOro;
+        }
     }
 }

@@ -8,7 +8,14 @@ namespace jogoRPG
 {
     public class arma : item
     {
-        public int DanoMin { get; set; }
-        public int DanoMax { get; set; }
+        public int DanoMIN{ get; private set; }
+        public int DanoMAX{ get; private set; }
+
+        public arma(int id, string nome, string nomePlural, int danoMin, int danoMax)
+            : base(id, nome, nomePlural)
+        {
+            DanoMAX = danoMax;
+            DanoMIN = danoMin;
+        }
     }
 }

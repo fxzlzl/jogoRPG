@@ -8,7 +8,13 @@ namespace jogoRPG
 {
     public class criaturaViva
     {
-        public int HPmax { get; set; }
-        public int HPatual { get; set; }
+        public int hpAtual { get; private set; }
+        public int hpMax { get; private set; }
+
+        public criaturaViva(int HPatual, int HPmax)
+        {
+            hpAtual = HPatual;
+            hpMax = HPmax;
+        }
     }
 }

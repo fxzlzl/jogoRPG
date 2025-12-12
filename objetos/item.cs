@@ -8,8 +8,15 @@ namespace jogoRPG
 {
     public class item
     {
-        public int ID { get; set; }
-        public string Nome { get; set; }
-        public string NomePlural { get; set; }
+        public int ID { get; private set; }
+        public string Nome { get; private set; }
+        public string NomePlural { get; private set; }
+
+        public item(int id, string nome, string nomePlural)
+        {
+            ID = id;
+            Nome = nome;
+            NomePlural = nomePlural; 
+        }
     }
 }

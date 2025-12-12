@@ -16,21 +16,13 @@ namespace jogoRPG
         private Player _player;
         public Engine()
         {
+
             InitializeComponent();
 
-            _player = new Player();
+            _player = new Player(10,10,20,0,1);
+
             local Local = new local(1, "Casa", "Essa é SUA casa! 🏠");
 
-            _player.HPatual = 10;
-            _player.HPmax = 50;
-            _player.Ouro = 20;
-            _player.EXPatual = 0;
-            _player.Level = 1;
-
-            lblPontosDeVida.Text = _player.HPatual.ToString();
-            lblOuro.Text = _player.Ouro.ToString();
-            lblExp.Text = _player.EXPatual.ToString();
-            lblNivel.Text = _player.Level.ToString();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
