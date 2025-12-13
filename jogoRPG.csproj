@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="itemInventario.cs" />
+    <Compile Include="itemLooteado.cs" />
+    <Compile Include="missaoPlayer.cs" />
     <Compile Include="objetos\arma.cs" />
     <Compile Include="Engine.cs">
       <SubType>Form</SubType>
@@ -62,6 +65,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="objetos\quest.cs" />
+    <Compile Include="questCompletaItem.cs" />
     <EmbeddedResource Include="Engine.resx">
       <DependentUpon>Engine.cs</DependentUpon>
     </EmbeddedResource>

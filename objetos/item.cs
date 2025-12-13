@@ -12,11 +12,11 @@ namespace jogoRPG
         public string Nome { get; private set; }
         public string NomePlural { get; private set; }
 
-        public item(int id, string nome, string nomePlural)
+        public item( int id, string nome, string nomePlural )
         {
             ID = id;
             Nome = nome;
-            NomePlural = nomePlural; 
+            NomePlural = nomePlural;
         }
     }
 }

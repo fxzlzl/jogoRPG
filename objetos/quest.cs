@@ -13,14 +13,20 @@ namespace jogoRPG
         public string Descricao { get; private set; }
         public int RecompensaOuro { get; private set; }
         public int RecompensaXP { get; private set; }
+        public item recompensaItem { get; private set; }
+        public List <questCompletaItem> questCompletaItem { get; private set; }
 
         public quest(int id, string nome, string descricao, int recompensaXP, int recompensaOuro)
         {
+            // Inicializa as props 
             ID = id;
             Nome = nome;
             Descricao = descricao;
             RecompensaOuro = recompensaOuro;
             RecompensaXP = recompensaXP;
+
+            // Inicializa a lista de itens necessários  
+            questCompletaItem = new List<questCompletaItem>();
         }
     }
 }

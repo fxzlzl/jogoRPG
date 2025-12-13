@@ -12,9 +12,14 @@ namespace jogoRPG
         public int xPontos { get; private set; }
         public int nivel { get; private set; }
 
-        public Player(int hpAtual, int hpMax, int gold, int exPoints, int level)
+        public List<itemInventario> inventario { get; set; }
+        public List<missaoPlayer> Missoes { get; set; }
+
+        public Player( int hpAtual, int hpMax, int gold, int exPoints, int level )
             : base(hpAtual, hpMax)
         {
+            inventario = new List<itemInventario>();
+            Missoes = new List<missaoPlayer>();
             Ouro = gold;
             xPontos = exPoints;
             nivel = level;
