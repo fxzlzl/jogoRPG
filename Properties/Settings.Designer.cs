@@ -12,12 +12,12 @@ namespace jogoRPG.Properties
 {
 
 
-    [global::System.Runtime.CompilerServices.CompilerGeneratoedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratoedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGeneratoor", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuratoion.ApplicationSettingsBase
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGeneratoor", "11.0.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
     {
 
-        private static Settings defaultInstance = ((Settings)(global::System.Configuratoion.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static Settings defaultInstance = ( (Settings)( global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings()) ) );
 
         public static Settings Default
         {

@@ -11,9 +11,9 @@
         /// Limpar os recursos que estão sendo usados.
         /// </summary>
         /// <param name="disposing">true se for necessário descartar os recursos gerenciados; caso contrário, false.</param>
-        protected override void Dispose(bool disposing)
+        protected override void Dispose( bool disposing )
         {
-            if (disposing && (components != null))
+            if (disposing && ( components != null ))
             {
                 components.Dispose();
             }
@@ -37,8 +37,8 @@
             this.lblExp = new System.Windows.Forms.Label();
             this.lblNivel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cboArmas = new System.Windows.Forms.ComboBox();
+            this.cboPoção = new System.Windows.Forms.ComboBox();
             this.btnUsarArma = new System.Windows.Forms.Button();
             this.btnUsarPoção = new System.Windows.Forms.Button();
             this.btnSul = new System.Windows.Forms.Button();
@@ -134,21 +134,21 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Selecione sua ação";
             // 
-            // comboBox1
+            // cboArmas
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(369, 559);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 9;
+            this.cboArmas.FormattingEnabled = true;
+            this.cboArmas.Location = new System.Drawing.Point(369, 559);
+            this.cboArmas.Name = "cboArmas";
+            this.cboArmas.Size = new System.Drawing.Size(121, 21);
+            this.cboArmas.TabIndex = 9;
             // 
-            // comboBox2
+            // cboPoção
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(369, 593);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 10;
+            this.cboPoção.FormattingEnabled = true;
+            this.cboPoção.Location = new System.Drawing.Point(369, 593);
+            this.cboPoção.Name = "cboPoção";
+            this.cboPoção.Size = new System.Drawing.Size(121, 21);
+            this.cboPoção.TabIndex = 10;
             // 
             // btnUsarArma
             // 
@@ -156,17 +156,17 @@
             this.btnUsarArma.Name = "btnUsarArma";
             this.btnUsarArma.Size = new System.Drawing.Size(75, 23);
             this.btnUsarArma.TabIndex = 11;
-            this.btnUsarArma.Text = "Usar";
+            this.btnUsarArma.Text = "Usar Arma";
             this.btnUsarArma.UseVisualStyleBackColor = true;
             this.btnUsarArma.Click += new System.EventHandler(this.btnUsarArma_Click);
             // 
             // btnUsarPoção
             // 
-            this.btnUsarPoção.Location = new System.Drawing.Point(620, 593);
+            this.btnUsarPoção.Location = new System.Drawing.Point(620, 588);
             this.btnUsarPoção.Name = "btnUsarPoção";
             this.btnUsarPoção.Size = new System.Drawing.Size(75, 23);
             this.btnUsarPoção.TabIndex = 12;
-            this.btnUsarPoção.Text = "Usar";
+            this.btnUsarPoção.Text = "Usar Poção";
             this.btnUsarPoção.UseVisualStyleBackColor = true;
             this.btnUsarPoção.Click += new System.EventHandler(this.btnUsarPoção_Click);
             // 
@@ -275,8 +275,8 @@
             this.Controls.Add(this.btnSul);
             this.Controls.Add(this.btnUsarPoção);
             this.Controls.Add(this.btnUsarArma);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cboPoção);
+            this.Controls.Add(this.cboArmas);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblNivel);
             this.Controls.Add(this.lblExp);
@@ -307,8 +307,8 @@
         private System.Windows.Forms.Label lblExp;
         private System.Windows.Forms.Label lblNivel;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cboArmas;
+        private System.Windows.Forms.ComboBox cboPoção;
         private System.Windows.Forms.Button btnUsarArma;
         private System.Windows.Forms.Button btnUsarPoção;
         private System.Windows.Forms.Button btnSul;
@@ -321,4 +321,3 @@
         private System.Windows.Forms.DataGridView dgvMissoes;
     }
 }
-

@@ -8,9 +8,11 @@ namespace jogoRPG
 {
     public class Player : criaturaViva
     {
-        public int Ouro { get; private set; }
-        public int xPontos { get; private set; }
+        public int Ouro { get; set; }
+        public int xPontos { get; set; }
         public int nivel { get; private set; }
+        public local localAtual { get; set; }
+
 
         public List<itemInventario> inventario { get; set; }
         public List<missaoPlayer> Missoes { get; set; }

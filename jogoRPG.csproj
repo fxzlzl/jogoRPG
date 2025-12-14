@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mundo.cs" />
+    <Compile Include="subClasses\geradorAleatorios.cs" />
+    <Compile Include="objetos\mundo.cs" />
     <Compile Include="subClasses\itemInventario.cs" />
     <Compile Include="subClasses\itemLooteado.cs" />
     <Compile Include="subClasses\missaoPlayer.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="objetos\healingPot.cs" />
     <Compile Include="objetos\item.cs" />
     <Compile Include="objetos\local.cs" />
-    <Compile Include="objetos\monstro.cs" />
+    <Compile Include="objetos\monstros.cs" />
     <Compile Include="objetos\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
