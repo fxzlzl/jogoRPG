@@ -2,7 +2,7 @@
 
 namespace jogoRPG
 {
-    public class monstro : criaturaViva
+    public class monstros : criaturaViva
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
@@ -11,7 +11,7 @@ namespace jogoRPG
         public int recOuro { get; private set; }
         public List<itemLooteado> tabelaLoot { get; set; }
 
-        public monstro( int id, string nome, int danoMax, int recXP, int recOro, int hpAtual, int hpMax )
+        public monstros( int id, string nome, int danoMax, int recXP, int recOro, int hpAtual, int hpMax )
             : base(hpAtual, hpMax)
         {
 

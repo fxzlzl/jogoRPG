@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associadas a um assembly.
 [assembly: AssemblyTitle("jogoRPG")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguratoion("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("jogoRPG")]
 [assembly: AssemblyCopyright("Copyright ©  2025")]

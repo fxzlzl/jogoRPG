@@ -36,6 +36,21 @@
             this.lblOuro = new System.Windows.Forms.Label();
             this.lblExp = new System.Windows.Forms.Label();
             this.lblNivel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.btnUsarArma = new System.Windows.Forms.Button();
+            this.btnUsarPoção = new System.Windows.Forms.Button();
+            this.btnSul = new System.Windows.Forms.Button();
+            this.btnOeste = new System.Windows.Forms.Button();
+            this.btnLeste = new System.Windows.Forms.Button();
+            this.btnNorte = new System.Windows.Forms.Button();
+            this.rtbLocal = new System.Windows.Forms.RichTextBox();
+            this.rtbMensagens = new System.Windows.Forms.RichTextBox();
+            this.dgvInventario = new System.Windows.Forms.DataGridView();
+            this.dgvMissoes = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMissoes)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -110,11 +125,159 @@
             this.lblNivel.TabIndex = 7;
             this.lblNivel.Text = "label8";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(617, 531);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(101, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Selecione sua ação";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(369, 559);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 9;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(369, 593);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 10;
+            // 
+            // btnUsarArma
+            // 
+            this.btnUsarArma.Location = new System.Drawing.Point(620, 559);
+            this.btnUsarArma.Name = "btnUsarArma";
+            this.btnUsarArma.Size = new System.Drawing.Size(75, 23);
+            this.btnUsarArma.TabIndex = 11;
+            this.btnUsarArma.Text = "Usar";
+            this.btnUsarArma.UseVisualStyleBackColor = true;
+            this.btnUsarArma.Click += new System.EventHandler(this.btnUsarArma_Click);
+            // 
+            // btnUsarPoção
+            // 
+            this.btnUsarPoção.Location = new System.Drawing.Point(620, 593);
+            this.btnUsarPoção.Name = "btnUsarPoção";
+            this.btnUsarPoção.Size = new System.Drawing.Size(75, 23);
+            this.btnUsarPoção.TabIndex = 12;
+            this.btnUsarPoção.Text = "Usar";
+            this.btnUsarPoção.UseVisualStyleBackColor = true;
+            this.btnUsarPoção.Click += new System.EventHandler(this.btnUsarPoção_Click);
+            // 
+            // btnSul
+            // 
+            this.btnSul.Location = new System.Drawing.Point(493, 487);
+            this.btnSul.Name = "btnSul";
+            this.btnSul.Size = new System.Drawing.Size(75, 23);
+            this.btnSul.TabIndex = 13;
+            this.btnSul.Text = "Ir Para Sul";
+            this.btnSul.UseVisualStyleBackColor = true;
+            this.btnSul.Click += new System.EventHandler(this.btnSul_Click);
+            // 
+            // btnOeste
+            // 
+            this.btnOeste.Location = new System.Drawing.Point(408, 460);
+            this.btnOeste.Name = "btnOeste";
+            this.btnOeste.Size = new System.Drawing.Size(79, 23);
+            this.btnOeste.TabIndex = 14;
+            this.btnOeste.Text = "Ir Para Oeste";
+            this.btnOeste.UseVisualStyleBackColor = true;
+            this.btnOeste.Click += new System.EventHandler(this.btnOeste_Click);
+            // 
+            // btnLeste
+            // 
+            this.btnLeste.Location = new System.Drawing.Point(573, 460);
+            this.btnLeste.Name = "btnLeste";
+            this.btnLeste.Size = new System.Drawing.Size(75, 23);
+            this.btnLeste.TabIndex = 15;
+            this.btnLeste.Text = "Ir Para Leste";
+            this.btnLeste.UseVisualStyleBackColor = true;
+            this.btnLeste.Click += new System.EventHandler(this.btnLeste_Click);
+            // 
+            // btnNorte
+            // 
+            this.btnNorte.Location = new System.Drawing.Point(493, 433);
+            this.btnNorte.Name = "btnNorte";
+            this.btnNorte.Size = new System.Drawing.Size(75, 23);
+            this.btnNorte.TabIndex = 16;
+            this.btnNorte.Text = "Ir Para Norte";
+            this.btnNorte.UseVisualStyleBackColor = true;
+            this.btnNorte.Click += new System.EventHandler(this.btnNorte_Click);
+            // 
+            // rtbLocal
+            // 
+            this.rtbLocal.Location = new System.Drawing.Point(347, 19);
+            this.rtbLocal.Name = "rtbLocal";
+            this.rtbLocal.ReadOnly = true;
+            this.rtbLocal.Size = new System.Drawing.Size(360, 105);
+            this.rtbLocal.TabIndex = 17;
+            this.rtbLocal.Text = "";
+            // 
+            // rtbMensagens
+            // 
+            this.rtbMensagens.Location = new System.Drawing.Point(347, 130);
+            this.rtbMensagens.Name = "rtbMensagens";
+            this.rtbMensagens.ReadOnly = true;
+            this.rtbMensagens.Size = new System.Drawing.Size(360, 286);
+            this.rtbMensagens.TabIndex = 18;
+            this.rtbMensagens.Text = "";
+            // 
+            // dgvInventario
+            // 
+            this.dgvInventario.AllowUserToAddRows = false;
+            this.dgvInventario.AllowUserToDeleteRows = false;
+            this.dgvInventario.AllowUserToResizeRows = false;
+            this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvInventario.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvInventario.Enabled = false;
+            this.dgvInventario.Location = new System.Drawing.Point(16, 130);
+            this.dgvInventario.MultiSelect = false;
+            this.dgvInventario.Name = "dgvInventario";
+            this.dgvInventario.ReadOnly = true;
+            this.dgvInventario.RowHeadersVisible = false;
+            this.dgvInventario.Size = new System.Drawing.Size(312, 309);
+            this.dgvInventario.TabIndex = 19;
+            // 
+            // dgvMissoes
+            // 
+            this.dgvMissoes.AllowUserToAddRows = false;
+            this.dgvMissoes.AllowUserToDeleteRows = false;
+            this.dgvMissoes.AllowUserToResizeRows = false;
+            this.dgvMissoes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMissoes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvMissoes.Enabled = false;
+            this.dgvMissoes.Location = new System.Drawing.Point(16, 446);
+            this.dgvMissoes.MultiSelect = false;
+            this.dgvMissoes.Name = "dgvMissoes";
+            this.dgvMissoes.ReadOnly = true;
+            this.dgvMissoes.RowHeadersVisible = false;
+            this.dgvMissoes.Size = new System.Drawing.Size(312, 189);
+            this.dgvMissoes.TabIndex = 20;
+            // 
             // Engine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(719, 651);
+            this.Controls.Add(this.dgvMissoes);
+            this.Controls.Add(this.dgvInventario);
+            this.Controls.Add(this.rtbMensagens);
+            this.Controls.Add(this.rtbLocal);
+            this.Controls.Add(this.btnNorte);
+            this.Controls.Add(this.btnLeste);
+            this.Controls.Add(this.btnOeste);
+            this.Controls.Add(this.btnSul);
+            this.Controls.Add(this.btnUsarPoção);
+            this.Controls.Add(this.btnUsarArma);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.lblNivel);
             this.Controls.Add(this.lblExp);
             this.Controls.Add(this.lblOuro);
@@ -126,6 +289,8 @@
             this.Name = "Engine";
             this.Text = "My Game";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMissoes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +306,19 @@
         private System.Windows.Forms.Label lblOuro;
         private System.Windows.Forms.Label lblExp;
         private System.Windows.Forms.Label lblNivel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button btnUsarArma;
+        private System.Windows.Forms.Button btnUsarPoção;
+        private System.Windows.Forms.Button btnSul;
+        private System.Windows.Forms.Button btnOeste;
+        private System.Windows.Forms.Button btnLeste;
+        private System.Windows.Forms.Button btnNorte;
+        private System.Windows.Forms.RichTextBox rtbLocal;
+        private System.Windows.Forms.RichTextBox rtbMensagens;
+        private System.Windows.Forms.DataGridView dgvInventario;
+        private System.Windows.Forms.DataGridView dgvMissoes;
     }
 }
 

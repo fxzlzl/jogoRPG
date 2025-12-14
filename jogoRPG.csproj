@@ -46,9 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="itemInventario.cs" />
-    <Compile Include="itemLooteado.cs" />
-    <Compile Include="missaoPlayer.cs" />
+    <Compile Include="mundo.cs" />
+    <Compile Include="subClasses\itemInventario.cs" />
+    <Compile Include="subClasses\itemLooteado.cs" />
+    <Compile Include="subClasses\missaoPlayer.cs" />
     <Compile Include="objetos\arma.cs" />
     <Compile Include="Engine.cs">
       <SubType>Form</SubType>
@@ -65,7 +66,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="objetos\quest.cs" />
-    <Compile Include="questCompletaItem.cs" />
+    <Compile Include="subClasses\questCompletaItem.cs" />
     <EmbeddedResource Include="Engine.resx">
       <DependentUpon>Engine.cs</DependentUpon>
     </EmbeddedResource>

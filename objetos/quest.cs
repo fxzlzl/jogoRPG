@@ -13,7 +13,7 @@ namespace jogoRPG
         public string Descricao { get; private set; }
         public int RecompensaOuro { get; private set; }
         public int RecompensaXP { get; private set; }
-        public item recompensaItem { get; private set; }
+        public item RecompensaItem { get; set; }
         public List <questCompletaItem> questCompletaItem { get; private set; }
 
         public quest(int id, string nome, string descricao, int recompensaXP, int recompensaOuro)
@@ -24,6 +24,7 @@ namespace jogoRPG
             Descricao = descricao;
             RecompensaOuro = recompensaOuro;
             RecompensaXP = recompensaXP;
+           
 
             // Inicializa a lista de itens necessários  
             questCompletaItem = new List<questCompletaItem>();

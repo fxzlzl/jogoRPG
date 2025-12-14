@@ -15,21 +15,21 @@ namespace jogoRPG
         public string Descricao { get; private set; }
         public item ItemNecessario { get; set; }
         public quest MissaoDisponivel { get; set; }
-        public monstro MonstrosAqui { get; set; }
+        public monstros monstrosAqui { get; set; }
         public local localNorte { get; set; }
         public local localLeste { get; set; }
         public local localSul { get; set; }
         public local localOeste { get; set; }
 
         public local( int id, string nome, string descricao, item itemNecessario = null,
-            quest missaoDisponivel = null, monstro monstrosAqui = null )
+            quest missaoDisponivel = null, monstros monstrossAqui = null )
         {
             ID = id;
             Nome = nome;
             Descricao = descricao;
             ItemNecessario = itemNecessario;
             MissaoDisponivel = missaoDisponivel;
-            MonstrosAqui = monstrosAqui;
+            monstrosAqui = monstrossAqui;
         }
     }
 }
