@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -193,16 +194,6 @@ namespace jogoRPG
             // Refresh player's potions combobox
             UpdatePotionListInUI();
         }
-
-        private void btnUsarArma_Click( object sender, EventArgs e )
-        {
-
-        }
-
-        private void btnUsarPoção_Click( object sender, EventArgs e )
-        {
-
-        }
         private void Form1_Load( object sender, EventArgs e )
         {
 
@@ -257,7 +248,7 @@ namespace jogoRPG
             {
                 if (inventoryItem.Detalhes is arma)
                 {
-                    if (inventoryItem.Quantidade> 0)
+                    if (inventoryItem.Quantidade > 0)
                     {
                         weapons.Add((arma)inventoryItem.Detalhes);
                     }
@@ -273,7 +264,7 @@ namespace jogoRPG
             else
             {
                 cboArmas.DataSource = weapons;
-                cboArmas.DisplayMember = "Name";
+                cboArmas.DisplayMember = "Nome";
                 cboArmas.ValueMember = "ID";
 
                 cboArmas.SelectedIndex = 0;
@@ -288,7 +279,7 @@ namespace jogoRPG
             {
                 if (inventoryItem.Detalhes is healingPot)
                 {
-                    if (inventoryItem.Quantidade> 0)
+                    if (inventoryItem.Quantidade > 0)
                     {
                         healingPotions.Add((healingPot)inventoryItem.Detalhes);
                     }
@@ -309,6 +300,169 @@ namespace jogoRPG
 
                 cboPoção.SelectedIndex = 0;
             }
+        }       
+        private void btnUsarArma_Click( object sender, EventArgs e )
+        {
+            // Get the currently selected weapon from the cboWeapons ComboBox
+            arma currentWeapon = (arma)cboArmas.SelectedItem;
+
+            // Determine the amount of damage to do to the monster
+            int damageToMonster = geradorAleatorios.NumberBetween(currentWeapon.DanoMIN, currentWeapon.DanoMAX);
+
+            // Apply the damage to the monster's CurrentHitPoints
+            _currentMonster.hpAtual -= damageToMonster;
+
+            // Display message
+            rtbMensagens.Text += "Você acertou um(a) " + _currentMonster.Name + " e deu " + damageToMonster.ToString() + " de dano." + Environment.NewLine;
+
+            // Check if the monster is dead
+            if (_currentMonster.hpAtual <= 0)
+            {
+                // Monster is dead
+                rtbMensagens.Text += Environment.NewLine;
+                rtbMensagens.Text += "Você eliminou um(a) " + _currentMonster.Name + Environment.NewLine;
+
+                // Give player experience points for killing the monster
+                _player.EXP += _currentMonster.recEXP;
+                rtbMensagens.Text += "Você recebeu " + _currentMonster.recEXP.ToString() + " pontos de XP" + Environment.NewLine;
+
+                // Give player gold for killing the monster 
+                _player.ouro += _currentMonster.recOuro;
+                rtbMensagens.Text += "Você recebeu " + _currentMonster.recOuro.ToString() + " ouro" + Environment.NewLine;
+
+                // Get random loot items from the monster
+                List<itemInventario> lootedItems = new List<itemInventario>();
+
+                // Add items to the lootedItems list, comparing a random number to the drop percentage
+                foreach (itemLooteado lootItem in _currentMonster.tabelaLoot)
+                {
+                    if (geradorAleatorios.NumberBetween(1, 100) <= lootItem.chanceDrop)
+                    {
+                        lootedItems.Add(new itemInventario(lootItem.detalhes, 1));
+                    }
+                }
+
+                // If no items were randomly selected, then add the default loot item(s).
+                if (lootedItems.Count == 0)
+                {
+                    foreach (itemLooteado lootItem in _currentMonster.tabelaLoot)
+                    {
+                        if (lootItem.itemPadrao)
+                        {
+                            lootedItems.Add(new itemInventario(lootItem.detalhes, 1));
+                        }
+                    }
+                }
+
+                // Add the looted items to the player's inventory
+                foreach (itemInventario inventoryItem in lootedItems)
+                {
+                    _player.AddItemToInventory(inventoryItem.Detalhes);
+
+                    if (inventoryItem.Quantidade == 1)
+                    {
+                        rtbMensagens.Text += "Você encontrou " + inventoryItem.Quantidade.ToString() + " " + inventoryItem.Detalhes.Nome + Environment.NewLine;
+                    }
+                    else
+                    {
+                        rtbMensagens.Text += "Você encontrou " + inventoryItem.Quantidade.ToString() + " " + inventoryItem.Detalhes.NomePlural + Environment.NewLine;
+                    }
+                }
+
+                // Refresh player information and inventory controls
+                lblPontosDeVida.Text = _player.hpAtual.ToString();
+                lblOuro.Text = _player.ouro.ToString();
+                lblExp.Text = _player.EXP.ToString();
+                lblNivel.Text = _player.nivel.ToString();
+
+                UpdateInventoryListInUI();
+                UpdateWeaponListInUI();
+                UpdatePotionListInUI();
+
+                // Add a blank line to the messages box, just for appearance.
+                rtbMensagens.Text += Environment.NewLine;
+
+                // Move player to current location (to heal player and create a new monster to fight)
+                MoveTo(_player.localAtual);
+            }
+            else
+            {
+                // Monster is still alive
+
+                // Determine the amount of damage the monster does to the player
+                int damageToPlayer = geradorAleatorios.NumberBetween(0, _currentMonster.MaxDMG);
+
+                // Display message
+                rtbMensagens.Text += "O(A) " + _currentMonster.Name + " te deu " + damageToPlayer.ToString() + " pontos de vida." + Environment.NewLine;
+
+                // Subtract damage from player
+                _player.hpAtual -= damageToPlayer;
+
+                // Refresh player data in UI
+                lblPontosDeVida.Text = _player.hpAtual.ToString();
+
+                if (_player.hpAtual <= 0)
+                {
+                    // Display message
+                    rtbMensagens.Text += "A(o) " + _currentMonster.Name + " te eliminou." + Environment.NewLine;
+
+                    // Move player to "Home"
+                    MoveTo(mundo.localByID(mundo.local_ID_HOME));
+                }
+            }
+        }
+
+        private void btnUsarPoção_Click( object sender, EventArgs e )
+        {
+            // Get the currently selected potion from the combobox
+            healingPot potion = (healingPot)cboPoção.SelectedItem;
+
+            // Add healing amount to the player's current hit points
+            _player.hpAtual= ( _player.hpAtual + potion.QtdCura);
+
+            // CurrentHitPoints cannot exceed player's MaximumHitPoints
+            if (_player.hpAtual > _player.hpMax)
+            {
+                _player.hpAtual = _player.hpMax;
+            }
+
+            // Remove the potion from the player's inventory
+            foreach (itemInventario ii in _player.inventario)
+            {
+                if (ii.Detalhes.ID == potion.ID)
+                {
+                    ii.Quantidade--;
+                    break;
+                }
+            }
+
+            // Display message
+            rtbMensagens.Text += "Você bebe um(a) " + potion.Nome + Environment.NewLine;
+
+            // Monster gets their turn to attack
+
+            // Determine the amount of damage the monster does to the player
+            int damageToPlayer = geradorAleatorios.NumberBetween(0, _currentMonster.MaxDMG);
+
+            // Display message
+            rtbMensagens.Text += "A(O) " + _currentMonster.Name + " te deu " + damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
+
+            // Subtract damage from player
+            _player.hpAtual -= damageToPlayer;
+
+            if (_player.hpAtual <= 0)
+            {
+                // Display message
+                rtbMensagens.Text += "A(O) " + _currentMonster.Name + " te eliminou." + Environment.NewLine;
+
+                // Move player to "Home"
+                MoveTo(mundo.localByID(mundo.local_ID_HOME));
+            }
+
+            // Refresh player data in UI
+            lblPontosDeVida.Text = _player.hpAtual.ToString();
+            UpdateInventoryListInUI();
+            UpdatePotionListInUI();
         }
     }
 }
