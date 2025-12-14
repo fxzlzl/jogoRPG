@@ -116,9 +116,9 @@ namespace jogoRPG
         private static void Populatelocals()
         {
             // Create each local
-            local home = new local(local_ID_HOME, "Home", "Sua Casa. Você realmente precisa dar um jeito nesse lugar.");
+            local home = new local(local_ID_HOME, "Casa", "Sua Casa. Você realmente precisa dar um jeito nesse lugar.");
 
-            local townSquare = new local(local_ID_TOWN_SQUARE, "Town square", "Você vê uma fonte.");
+            local townSquare = new local(local_ID_TOWN_SQUARE, "Centro da cidade", "Você vê uma fonte e 4 direções.");
 
             local alchemistHut = new local(local_ID_ALCHEMIST_HUT, "Toca do alquimista", "Tem algumas plantas estranhas na frente do local.");
             alchemistHut.MissaoDisponivel = QuestByID(QUEST_ID_CLEAR_ALCHEMIST_GARDEN);

@@ -26,8 +26,8 @@ namespace jogoRPG
             _player.inventario.Add(new itemInventario(mundo.ItemByID(mundo.ITEM_ID_RUSTY_SWORD), 1));
 
             lblPontosDeVida.Text = _player.hpAtual.ToString();
-            lblOuro.Text = _player.Ouro.ToString();
-            lblExp.Text = _player.xPontos.ToString();
+            lblOuro.Text = _player.ouro.ToString();
+            lblExp.Text = _player.EXP.ToString();
             lblNivel.Text = _player.nivel.ToString();
         }
 
@@ -53,189 +53,84 @@ namespace jogoRPG
 
         private void MoveTo( local newLocation )
         {
-            //Does the location have any required items
-            if (newLocation.ItemNecessario != null)
+            if (!_player.HasRequiredItemToEnterThisLocation(newLocation))
             {
-                // See if the player has the required item in their inventory
-                bool playerHasRequiredItem = false;
-
-                foreach (itemInventario ii in _player.inventario)
-                {
-                    if (ii.Detalhes.ID == newLocation.ItemNecessario.ID)
-                    {
-                        // We found the required item
-                        playerHasRequiredItem = true;
-                        break; // Exit out of the foreach loop
-                    }
-                }
-
-                if (!playerHasRequiredItem)
-                {
-                    // We didn't find the required item in their inventory, so display a message and stop trying to move
-                    rtbMensagens.Text += "Você precisa de um(a) " + newLocation.ItemNecessario.Nome + " para entrar aqui, volte com isso em mãos." + Environment.NewLine;
-                    return;
-                }
+                // Não encontramos o item no inventário; exibe mensagem e cancela a movimentação
+                rtbMensagens.Text += "Você precisa de um(a) " + newLocation.ItemNecessario.Nome + " para entrar aqui, volte com isso em mãos." + Environment.NewLine;
+                return;
             }
-
-            // Update the player's current location
+            // Atualiza a localização atual do jogador
             _player.localAtual = newLocation;
 
-            // Show/hide available movement buttons
+            // Exibe/oculta botões de movimento disponíveis
             btnNorte.Visible = ( newLocation.localNorte != null );
             btnLeste.Visible = ( newLocation.localLeste != null );
             btnSul.Visible = ( newLocation.localSul != null );
             btnOeste.Visible = ( newLocation.localOeste != null );
 
-            // Display current location name and description
+            // Exibe nome e descrição da localização atual
             rtbLocal.Text = newLocation.Nome + Environment.NewLine;
             rtbLocal.Text += newLocation.Descricao + Environment.NewLine;
 
-            // Completely heal the player
+            // Cura completamente o jogador
             _player.hpAtual = _player.hpMax;
 
-            // Update Hit Points in UI
+            // Atualiza os Pontos de Vida na UI
             lblPontosDeVida.Text = _player.hpAtual.ToString();
 
-            // Does the location have a quest?
+            // O local tem uma missão?
             if (newLocation.MissaoDisponivel != null)
             {
-                // See if the player already has the quest, and if they've completed it
-                bool playerAlreadyHasQuest = false;
-                bool playerAlreadyCompletedQuest = false;
+                // Verifica se o jogador já tem a missão e se a concluiu
+                bool playerAlreadyHasQuest = _player.HasThisQuest(newLocation.MissaoDisponivel);
+                bool playerAlreadyCompletedQuest = _player.CompletedThisQuest(newLocation.MissaoDisponivel);
 
-                foreach (missaoPlayer playerQuest in _player.Missoes)
-                {
-                    if (playerQuest.Detalhes.ID == newLocation.MissaoDisponivel.ID)
-                    {
-                        playerAlreadyHasQuest = true;
-
-                        if (playerQuest.concluida)
-                        {
-                            playerAlreadyCompletedQuest = true;
-                        }
-                    }
-                }
-
-                // See if the player already has the quest
+                // Verifica se o jogador já possui a missão
                 if (playerAlreadyHasQuest)
                 {
-                    // If the player has not completed the quest yet
+                    // Se o jogador ainda não concluiu a missão
                     if (!playerAlreadyCompletedQuest)
                     {
-                        // See if the player has all the items needed to complete the quest
-                        bool playerHasAllItemsToCompleteQuest = true;
+                        // Verifica se o jogador tem todos os itens necessários para completar a missão
+                        bool playerHasAllItemsToCompleteQuest = _player.HasAllQuestCompletionItems(newLocation.MissaoDisponivel);
 
-                        foreach (questCompletaItem qci in newLocation.MissaoDisponivel.questCompletaItem)
-                        {
-                            bool foundItemInPlayersInventory = false;
-
-                            // Check each item in the player's inventory, to see if they have it, and enough of it
-                            foreach (itemInventario ii in _player.inventario)
-                            {
-                                // The player has this item in their inventory
-                                if (ii.Detalhes.ID == qci.Detalhes.ID)
-                                {
-                                    foundItemInPlayersInventory = true;
-
-                                    if (ii.Quantidade < qci.Quantidade)
-                                    {
-                                        // The player does not have enough of this item to complete the quest
-                                        playerHasAllItemsToCompleteQuest = false;
-
-                                        // There is no reason to continue checking for the other quest completion items
-                                        break;
-                                    }
-
-                                    // We found the item, so don't check the rest of the player's inventory
-                                    break;
-                                }
-                            }
-
-                            // If we didn't find the required item, set our variable and stop looking for other items
-                            if (!foundItemInPlayersInventory)
-                            {
-                                // The player does not have this item in their inventory
-                                playerHasAllItemsToCompleteQuest = false;
-
-                                // There is no reason to continue checking for the other quest completion items
-                                break;
-                            }
-                        }
-
-                        // The player has all items required to complete the quest
+                        // O jogador possui todos os itens necessários para completar a missão
                         if (playerHasAllItemsToCompleteQuest)
                         {
-                            // Display message
+                            // Exibe mensagem
                             rtbMensagens.Text += Environment.NewLine;
                             rtbMensagens.Text += "Você completou uma '" + newLocation.MissaoDisponivel.Nome + "' quest." + Environment.NewLine;
 
-                            // Remove quest items from inventory
-                            foreach (questCompletaItem qci in newLocation.MissaoDisponivel.questCompletaItem)
-                            {
-                                foreach (itemInventario ii in _player.inventario)
-                                {
-                                    if (ii.Detalhes.ID == qci.Detalhes.ID)
-                                    {
-                                        // Subtract the Quantidade from the player's inventory that was needed to complete the quest
-                                        ii.Quantidade -= qci.Quantidade;
-                                        break;
-                                    }
-                                }
-                            }
+                            // Remove itens da missão do inventário
+                            _player.RemoveQuestCompletionItems(newLocation.MissaoDisponivel);
 
-                            // Give quest rewards
+                            // Concede recompensas da missão
                             rtbMensagens.Text += "Você recebe: " + Environment.NewLine;
                             rtbMensagens.Text += newLocation.MissaoDisponivel.RecompensaXP.ToString() + " pontos de XP" + Environment.NewLine;
                             rtbMensagens.Text += newLocation.MissaoDisponivel.RecompensaOuro.ToString() + " ouro" + Environment.NewLine;
                             rtbMensagens.Text += newLocation.MissaoDisponivel.RecompensaItem.Nome + Environment.NewLine;
                             rtbMensagens.Text += Environment.NewLine;
 
-                            _player.xPontos += newLocation.MissaoDisponivel.RecompensaXP;
-                            _player.Ouro += newLocation.MissaoDisponivel.RecompensaOuro;
+                            _player.EXP += newLocation.MissaoDisponivel.RecompensaXP;
+                            _player.ouro += newLocation.MissaoDisponivel.RecompensaOuro;
 
-                            // Add the reward item to the player's inventory
-                            bool addedItemToPlayerInventory = false;
+                            // Adiciona o item de recompensa ao inventário do jogador
+                            _player.AddItemToInventory(newLocation.MissaoDisponivel.RecompensaItem);
 
-                            foreach (itemInventario ii in _player.inventario)
-                            {
-                                if (ii.Detalhes.ID == newLocation.MissaoDisponivel.RecompensaItem.ID)
-                                {
-                                    // They have the item in their inventory, so increase the Quantidade by one
-                                    ii.Quantidade++;
 
-                                    addedItemToPlayerInventory = true;
+                            // Marca a missão como concluída
+                            // Encontra a missão na lista de missões do jogador
 
-                                    break;
-                                }
-                            }
-
-                            // They didn't have the item, so add it to their inventory, with a Quantidade of 1
-                            if (!addedItemToPlayerInventory)
-                            {
-                                _player.inventario.Add(new itemInventario(newLocation.MissaoDisponivel.RecompensaItem, 1));
-                            }
-
-                            // Mark the quest as completed
-                            // Find the quest in the player's quest list
-                            foreach (missaoPlayer pq in _player.Missoes)
-                            {
-                                if (pq.Detalhes.ID == newLocation.MissaoDisponivel.ID)
-                                {
-                                    // Mark it as completed
-                                    pq.concluida = true;
-
-                                    break;
-                                }
-                            }
+                            _player.MarkQuestCompleted(newLocation.MissaoDisponivel);
                         }
                     }
                 }
                 else
                 {
-                    // The player does not already have the quest
+                    // O jogador ainda não possui a missão
 
-                    // Display the messages
-                    rtbMensagens.Text += "Missão! " + newLocation.MissaoDisponivel.Nome + " quest." + Environment.NewLine;
+                    // Exibe as mensagens
+                    rtbMensagens.Text += "🎯 " + newLocation.MissaoDisponivel.Nome + " 🎯" + Environment.NewLine;
                     rtbMensagens.Text += newLocation.MissaoDisponivel.Descricao + Environment.NewLine;
                     rtbMensagens.Text += "Para completar, retorne com:" + Environment.NewLine;
                     foreach (questCompletaItem qci in newLocation.MissaoDisponivel.questCompletaItem)
@@ -251,17 +146,17 @@ namespace jogoRPG
                     }
                     rtbMensagens.Text += Environment.NewLine;
 
-                    // Add the quest to the player's quest list
+                    // Adiciona a missão à lista de missões do jogador
                     _player.Missoes.Add(new missaoPlayer(newLocation.MissaoDisponivel));
                 }
             }
 
-            // Does the location have a monster?
+            // O local tem um monstro?
             if (newLocation.monstrosAqui != null)
             {
                 rtbMensagens.Text += "Você vê um(a) " + newLocation.monstrosAqui.Name + Environment.NewLine;
 
-                // Make a new monster, using the values from the standard monster in the mundo.Monster list
+                // Cria um novo monstro, usando os valores do monstro padrão na lista mundo.Monstro
                 monstros standardMonster = mundo.monstrosByID(newLocation.monstrosAqui.ID);
 
                 _currentMonster = new monstros(standardMonster.ID, standardMonster.Name, standardMonster.MaxDMG,
@@ -286,14 +181,45 @@ namespace jogoRPG
                 btnUsarArma.Visible = false;
                 btnUsarPoção.Visible = false;
             }
-
             // Refresh player's inventory list
+            UpdateInventoryListInUI();
+
+            // Refresh player's quest list
+            UpdateQuestListInUI();
+
+            // Refresh player's weapons combobox
+            UpdateWeaponListInUI();
+
+            // Refresh player's potions combobox
+            UpdatePotionListInUI();
+        }
+
+        private void btnUsarArma_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void btnUsarPoção_Click( object sender, EventArgs e )
+        {
+
+        }
+        private void Form1_Load( object sender, EventArgs e )
+        {
+
+        }
+
+        private void dgvInventario_CellContentClick( object sender, DataGridViewCellEventArgs e )
+        {
+
+        }
+        private void UpdateInventoryListInUI()
+        {
             dgvInventario.RowHeadersVisible = false;
 
             dgvInventario.ColumnCount = 2;
-            dgvInventario.Columns[0].Name = "Nome";
+            dgvInventario.Columns[0].Name = "Name";
             dgvInventario.Columns[0].Width = 197;
-            dgvInventario.Columns[1].Name = "Quantidade";
+            dgvInventario.Columns[1].Name = "Quantity";
 
             dgvInventario.Rows.Clear();
 
@@ -304,14 +230,16 @@ namespace jogoRPG
                     dgvInventario.Rows.Add(new[] { inventoryItem.Detalhes.Nome, inventoryItem.Quantidade.ToString() });
                 }
             }
+        }
 
-            // Refresh player's quest list
+        private void UpdateQuestListInUI()
+        {
             dgvMissoes.RowHeadersVisible = false;
 
             dgvMissoes.ColumnCount = 2;
-            dgvMissoes.Columns[0].Name = "Nome";
+            dgvMissoes.Columns[0].Name = "Name";
             dgvMissoes.Columns[0].Width = 197;
-            dgvMissoes.Columns[1].Name = "Feito?";
+            dgvMissoes.Columns[1].Name = "Done?";
 
             dgvMissoes.Rows.Clear();
 
@@ -319,15 +247,17 @@ namespace jogoRPG
             {
                 dgvMissoes.Rows.Add(new[] { playerQuest.Detalhes.Nome, playerQuest.concluida.ToString() });
             }
+        }
 
-            // Refresh player's weapons combobox
+        private void UpdateWeaponListInUI()
+        {
             List<arma> weapons = new List<arma>();
 
             foreach (itemInventario inventoryItem in _player.inventario)
             {
                 if (inventoryItem.Detalhes is arma)
                 {
-                    if (inventoryItem.Quantidade > 0)
+                    if (inventoryItem.Quantidade> 0)
                     {
                         weapons.Add((arma)inventoryItem.Detalhes);
                     }
@@ -343,20 +273,22 @@ namespace jogoRPG
             else
             {
                 cboArmas.DataSource = weapons;
-                cboArmas.DisplayMember = "Nome";
+                cboArmas.DisplayMember = "Name";
                 cboArmas.ValueMember = "ID";
 
                 cboArmas.SelectedIndex = 0;
             }
+        }
 
-            // Refresh player's potions combobox
+        private void UpdatePotionListInUI()
+        {
             List<healingPot> healingPotions = new List<healingPot>();
 
             foreach (itemInventario inventoryItem in _player.inventario)
             {
                 if (inventoryItem.Detalhes is healingPot)
                 {
-                    if (inventoryItem.Quantidade > 0)
+                    if (inventoryItem.Quantidade> 0)
                     {
                         healingPotions.Add((healingPot)inventoryItem.Detalhes);
                     }
@@ -378,21 +310,5 @@ namespace jogoRPG
                 cboPoção.SelectedIndex = 0;
             }
         }
-
-        private void btnUsarArma_Click( object sender, EventArgs e )
-        {
-
-        }
-
-        private void btnUsarPoção_Click( object sender, EventArgs e )
-        {
-
-        }
-        private void Form1_Load( object sender, EventArgs e )
-        {
-
-        }
-
-
     }
 }
